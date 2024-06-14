@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-
+import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.js";
 import messageRoutes from "./routes/message.js";
 import connectToMongoDb from "./db/connectToMongoDb.js";
@@ -14,6 +14,7 @@ dotenv.config();
 //   res.send("API is running...!");
 // });
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
