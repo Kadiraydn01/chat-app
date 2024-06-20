@@ -1,4 +1,3 @@
-import { generateKey } from "crypto";
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateTokenAndCookie from "../utils/generateToken.js";
@@ -11,7 +10,9 @@ export const login = async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user.password || "");
 
     if (!user || !isPasswordMatch) {
-      return res.status(400).json({ error: "Invalid username or password" });
+      return res
+        .status(400)
+        .json({ error: "Geçersiz kullanıcı adı veya hatalı şifre" });
     }
     generateTokenAndCookie(user._id, res);
 
@@ -32,20 +33,19 @@ export const register = async (req, res) => {
     const { fullName, username, password, confirmPassword, gender } = req.body;
 
     if (password !== confirmPassword) {
-      return res.status(400).json({ error: "Passwords don't match" });
+      return res.status(400).json({ error: "Şifreler eşleşmiyor!" });
     }
 
     const user = await User.findOne({ username });
 
     if (user) {
-      return res.status(400).json({ error: "Username already exists" });
+      return res
+        .status(400)
+        .json({ error: "Bu kullanıcı adı zaten kullanılmaktadır" });
     }
 
-    // HASH PASSWORD HERE
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
-    // https://avatar-placeholder.iran.liara.run/
 
     const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
     const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
