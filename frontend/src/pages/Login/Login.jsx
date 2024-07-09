@@ -4,7 +4,7 @@ const Login = () => {
       <div className=" w-full  p-8 bg-indigo-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-50 border border-gray-100">
         <h1 className="text-3xl font-semibold text-center text-gray-600">
           Login
-          <span className="text-red-500"> Dadilya</span>
+          <span className="text-red-500"> Trixy</span>
         </h1>
         <form>
           <div>
