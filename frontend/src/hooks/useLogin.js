@@ -6,6 +6,8 @@ const useLogin = () => {
   const { setAuthUser } = useAuthContext();
 
   const login = async (username, password) => {
+    const success = handleInputErrors(username, password);
+    if (!success) return;
     setLoading(true);
     try {
       const res = await fetch("/api/auth/login", {
@@ -31,3 +33,11 @@ const useLogin = () => {
 };
 
 export default useLogin;
+
+function handleInputErrors(username, password) {
+  if (!username || !password) {
+    toast.error("Username and password are required");
+    return false;
+  }
+  return true;
+}
